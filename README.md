@@ -7,7 +7,7 @@ This Python project aims to implement an image compression technique using the D
 1. **Installation**: Clone the repository to your local machine.
 
     ```bash
-    git clone <repository_url>
+    git clone https://github.com/omarhashem80/2D_DCT
     ```
 
 2. **Requirements**: Ensure you have the necessary dependencies installed. You can install them using pip.
