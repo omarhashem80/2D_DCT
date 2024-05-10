@@ -1,17 +1,17 @@
 Original Image Size : 3.42 MB
 m = 1 :
-Compressed Image Size: 0.19 MB
-PSNR: 31.51 dB
+Compressed Image Size: 0.02 MB
+PSNR: 19.86 dB
 
 m = 2 :
-Compressed Image Size: 0.74 MB
-PSNR: 32.08 dB
+Compressed Image Size: 0.21 MB
+PSNR: 21.90 dB
 
 m = 3 :
-Compressed Image Size: 1.67 MB
-PSNR: 32.57 dB
+Compressed Image Size: 0.43 MB
+PSNR: 23.75 dB
 
 m = 4 :
-Compressed Image Size: 2.97 MB
-PSNR: 33.21 dB
+Compressed Image Size: 0.71 MB
+PSNR: 25.90 dB
 

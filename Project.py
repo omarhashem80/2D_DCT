@@ -1,11 +1,10 @@
-import cv2
-import numpy as np
 import os
+import cv2
 import sys
+import numpy as np
 from scipy.fftpack import dct, idct
 from math import log10
 import matplotlib.pyplot as plt
-
 class ImageCompressor:
     @staticmethod
     def dct_2d(processed_block):
@@ -113,9 +112,9 @@ class ImageCompressor:
         for i in range(3):
             plt.figure(figsize=(14, 6))
             plt.axis("on")
-            plt.imshow(input_image[:, :, 2 - i], cmap=colors[i])
+            plt.imshow(input_image[:, :, 2 - i], cmap=colors[i]);
             plt.axis("off")
-            plt.savefig(f"Image Components/{colors[i][:-1].lower()} channel.png")
+            plt.savefig(f"Image Components/{colors[i][:-1].lower()} channel.png");
 
     @staticmethod
     def run(image_path, m):
@@ -129,36 +128,55 @@ class ImageCompressor:
         Returns:
             None
         """
+        # Open a file to write results
         with open('sizes.txt', 'w') as file:
+            # Read the input image
             input_image_array = cv2.imread(image_path)
+            
+            # Visualize the components of the input image
             ImageCompressor.visualize_components(input_image_array)
+            
+            # Create directories for storing compressed and decompressed images if they don't exist
             os.makedirs("Decompressed Images", exist_ok=True)
             os.makedirs("Compressed Images", exist_ok=True)
+            
+            # Write the original size of the image to the file
             file.write(f"Original Image Size : {os.path.getsize(image_path) / (1024 ** 2):.2f} MB\n")
+            
+            # Initialize an array to store PSNR values
             PSNRS = np.zeros(m)
-            for i in range(1, m+1):
+            
+            # Compress and decompress the image for different compression levels
+            for i in range(1, m + 1):
+                # Compress the image
                 compressed_image = ImageCompressor.compress(input_image_array, i)
-                np.save(f"Compressed Images/compressedImageWithM{i}", compressed_image)
+                 
+                cv2.imwrite(f'Compressed Images/compressedImageWithM{i}.png', compressed_image)
+                
+                # Decompress the image
                 decompressed_image = ImageCompressor.decompress(compressed_image, i)
-                PSNR = ImageCompressor.write_image_info(file, sys.getsizeof(compressed_image.astype(np.float16)) / (1024 ** 2), input_image_array, decompressed_image.astype(np.uint8), i)
+                
+                # Write image information and calculate PSNR
+                PSNR = ImageCompressor.write_image_info(file, os.path.getsize(f'Compressed Images/compressedImageWithM{i}.png') / (1024 ** 2),
+                                                        input_image_array, decompressed_image, i)
+                # Store PSNR value
                 PSNRS[i - 1] = PSNR
+                
+                # Save the decompressed image
                 cv2.imwrite(f"Decompressed Images/decompressedImageWithM{i}.png", decompressed_image)
-                plt.figure(figsize=(8, 4))
-                plt.imshow(compressed_image.astype(np.uint8))
-                plt.title(f"Compressed Image (m={i})")
-                plt.axis('off')
-                plt.savefig(f'Compressed Images/compressedImageWithM{i}.png')
-            all_m_values = np.linspace(1, 4, 4, dtype=np.uint8)
-            ImageCompressor.plot_PSNRS(all_m_values, PSNRS)
+                
+            
+            # Plot PSNR values
+            ImageCompressor.plot_PSNRS(m, PSNRS)
 
     @staticmethod
-    def write_image_info(file, size_in_bytes, input_image, decompressed_image, m):
+    def write_image_info(file, size_in_MB, input_image, decompressed_image, m):
         """
         Writes image compression information and PSNR value to a file.
 
         Parameters:
             file (file): File object to write information to.
-            size_in_bytes (float): Size of the compressed image in bytes.
+            size_in_MB (float): Size of the compressed image in MB.
             input_image (numpy.ndarray): Original input image.
             decompressed_image (numpy.ndarray): Decompressed image.
             m (int): Number of coefficients retained during compression.
@@ -167,28 +185,31 @@ class ImageCompressor:
             float: PSNR value.
         """
         file.write(f"m = {m} :\n")
-        file.write(f"Compressed Image Size: {size_in_bytes:.2f} MB\n")
+        file.write(f"Compressed Image Size: {size_in_MB:.2f} MB\n")
         PSNR = ImageCompressor.psnr(input_image, decompressed_image)
         file.write(f"PSNR: {PSNR:.2f} dB\n")
         file.write("\n")
         return PSNR
 
     @staticmethod
-    def plot_PSNRS(all_ms, PSNRS):
+    def plot_PSNRS(m, PSNRS):
         """
         Plots PSNR values against m values and saves the plot as an image.
 
         Parameters:
-            all_ms (numpy.ndarray): Array of m values.
+            m (int): Number of coefficients to retain.
             PSNRS (numpy.ndarray): Array of PSNR values.
 
         Returns:
             None
         """
+        all_ms = np.linspace(1, m, m, dtype=np.uint8)
         plt.figure(figsize=(14, 6))
         plt.plot(all_ms, PSNRS, marker='o')
         plt.xlabel("m")
         plt.ylabel("PSNR")
         plt.title("PSNR vs m")
         plt.grid(True)
-        plt.savefig("PSNR_plot.png")
+        plt.savefig("PSNRGraph.png")
+
+ImageCompressor.run("./image1.png", 4)
