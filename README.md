@@ -78,14 +78,6 @@ ImageCompressor.run('./image1.png', 4)
 
 ---
 
-## 🤝 **Contributing**
-
-Contributions are welcome! If you spot any issues or have suggestions for improvements, feel free to:  
-1. Open an issue.  
-2. Submit a pull request.  
-
----
-
 ## 🌟 **Acknowledgments**
 
 Thank you for using this project! We hope it helps you understand image compression techniques and inspires further exploration. 🌍✨  
