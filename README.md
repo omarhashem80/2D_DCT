@@ -1,50 +1,93 @@
-**Image Compression Project**
+# 🌟 **Image Compression Using 2D DCT** 🌟
 
-This Python project aims to implement an image compression technique using the Discrete Cosine Transform (DCT) algorithm. It offers functionalities for compressing and decompressing images, calculating the Peak Signal-to-Noise Ratio (PSNR), visualizing color components, and plotting PSNR values against different compression levels.
+This Python project demonstrates an image compression technique utilizing the **Discrete Cosine Transform (DCT)** algorithm. It provides functionalities for compressing and decompressing images, calculating the **Peak Signal-to-Noise Ratio (PSNR)**, visualizing color components, and comparing compression performance across different levels.
 
-**Usage**
+---
 
-1. **Installation**: Clone the repository to your local machine.
+## 🚀 **Features**
 
-    ```bash
-    git clone https://github.com/omarhashem80/2D_DCT
-    ```
+1. **Compression & Decompression**  
+   - Retains only top-left `m × m` DCT coefficients of each 8x8 block for compression.  
+   - Reconstructs images using the inverse DCT (IDCT).  
 
-2. **Requirements**: Ensure you have the necessary dependencies installed. You can install them using pip.
+2. **Performance Metrics**  
+   - Calculates **PSNR** values to evaluate image quality after decompression.  
+   - Saves detailed compression and decompression sizes for each `m`.  
 
-    ```bash
-    pip install -r requirements.txt
-    ```
+3. **Visualization**  
+   - Visualizes R, G, and B channels of the input image.  
+   - Generates a plot of PSNR values for different compression levels.  
 
-3. **Running the Project**: Execute the `run()` method in the `ImageCompressor` class to perform image compression, decompression, PSNR calculation, and plotting.
+4. **Bar Charts**  
+   - Compares compressed and decompressed sizes for various `m` values using **Plotly**.
 
-    ```python
-    from ImageCompressor import ImageCompressor
+---
 
-    ImageCompressor.run()
-    ```
+## 📁 **File Structure**
 
-4. **Output**:
-   - Compressed images will be saved in the `Compressed Images` folder.
-   - Decompressed images will be saved in the `Decompressed Images` folder.
-   - PSNR values for different compression levels will be written to a file named `sizes.txt`.
-   - PSNR plot will be saved as `PSNR_plot.png`.
-   - Color component visualizations will be saved in the `Image Components` folder.
+- **`ImageCompressor.py`**: Core implementation of the image compression algorithm.  
+- **`requirements.txt`**: Python dependencies for the project.  
+- **`image1.png`**: Sample input image for demonstration.  
+- **`sizes.txt`**: Outputs compression and PSNR data.  
+- **`Compressed Images/`**: Stores compressed images.  
+- **`Decompressed Images/`**: Stores decompressed images.  
+- **`Image Components/`**: Stores color component visualizations.  
+- **`PSNRGraph.png`**: Plot showing PSNR values against `m`.  
 
-5. **Customization**: You can modify the input image (`image1.png`) and adjust compression levels in the `run()` method.
+---
 
-**File Structure**
+## 🛠️ **Getting Started**
 
-- **ImageCompressor.py**: Contains the implementation of the image compression algorithm.
-- **README.md**: Instructions and information about the project.
-- **requirements.txt**: List of Python dependencies required for the project.
-- **image1.png**: Sample input image for compression.
-- **sizes.txt**: File to store compression information and PSNR values.
-- **Compressed Images/**: Folder to store compressed images.
-- **Decompressed Images/**: Folder to store decompressed images.
-- **Image Components/**: Folder to store color component visualizations.
-- **PSNR_plot.png**: Plot showing PSNR values against different compression levels.
+### **1. Clone the Repository**  
+```bash
+git clone https://github.com/omarhashem80/2D_DCT
+cd 2D_DCT
+```
 
-**Contributing**
+### **2. Install Dependencies**  
+Use the provided `requirements.txt` to install the necessary libraries.  
+```bash
+pip install -r requirements.txt
+```
 
-Contributions are welcome! If you find any issues or have suggestions for improvements, feel free to open an issue or submit a pull request.
+### **3. Run the Project**  
+Execute the `run()` method from the `ImageCompressor` class to start compression, decompression, and analysis.  
+```python
+from ImageCompressor import ImageCompressor
+
+ImageCompressor.run('./image1.png', 4)
+```
+
+---
+
+## 📤 **Outputs**
+
+- **Compressed Images**: Saved in the `Compressed Images/` folder, with filenames like `compressedImageWithM{m}.png`.  
+- **Decompressed Images**: Saved in the `Decompressed Images/` folder.  
+- **PSNR Values**: Logged in the `sizes.txt` file for all tested `m` values.  
+- **PSNR Plot**: Saved as `PSNRGraph.png`.  
+- **Color Components**: Saved in the `Image Components/` folder for R, G, and B channels.  
+
+---
+
+
+## ⚙️ **Customization**
+
+- Change the **input image** by modifying the `image_path` parameter in the `run()` method.  
+- Adjust the **number of retained coefficients (`m`)** to explore different compression levels.  
+
+---
+
+## 🤝 **Contributing**
+
+Contributions are welcome! If you spot any issues or have suggestions for improvements, feel free to:  
+1. Open an issue.  
+2. Submit a pull request.  
+
+---
+
+## 🌟 **Acknowledgments**
+
+Thank you for using this project! We hope it helps you understand image compression techniques and inspires further exploration. 🌍✨  
+
+--- 
